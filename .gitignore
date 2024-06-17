@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*.excalidraw
+*.png
+*.jpg
+SECRETS
