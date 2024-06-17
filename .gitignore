@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-*.excalidraw
 *.png
 *.jpg
 SECRETS
