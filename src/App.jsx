@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useState, } from 'react'
+import { Routes, Route, } from "react-router-dom";
+import Header from "./components/Header";
 import './App.css'
 
 function App() {
+  
   return <>
-    <p>Hi! I'm  a react app.</p>
+    <Header />
+    <Routes>
+      <Route path="/" element={<AllArticles />} />
+    </Routes>
   </>;
 }
 
