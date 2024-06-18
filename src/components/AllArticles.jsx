@@ -4,11 +4,12 @@ import Paginator from "./Paginator";
 
 
 export default function AllArticles({}) {
-  const [requestUrl, setRequestUrl] = useState("http://localhost:8000/api/articles");
+  // the axios config needed to request the articles
+  const [requestConf, setRequestConf] = useState({ url: "/articles"});
   return <div className="all-articles">
-{/*     <SearchBar setRequestUrl={setRequestUrl} /> */}
+{/*     <SearchBar setRequestConf={setRequestConf} /> */}
     <Paginator
-      requestUrl={requestUrl}
+      requestConf={requestConf}
       ItemComponent={ArticleSummary}
       idKey="article_id"
       itemsKey="articles"
@@ -20,6 +21,11 @@ export default function AllArticles({}) {
 // export default
 function ArticleSummary({ data, }) {
   return <article className="article-summary">
-    <div>{data.title}</div>
+    <div className="title">{data.title}</div>
+    <div className="topic">{data.topic}</div>
+    <div className="votes">{data.votes}</div>
+    <div className="author">By {data.author}</div>
+    <div className="created_at">Posted: {data.votes}</div>
+    <img src={data.article_img_url} alt={`image for ${data.title}`} />
   </article>;
 }
