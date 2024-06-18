@@ -26,9 +26,9 @@ export default function Paginator({ requestConf, ItemComponent, idKey, itemsKey 
     });
   }, []);
 
-  return <ol className="paginator">
+  return <div className="paginator">
     {items.map((item) => {
       return <ItemComponent key={item[idKey]} data={item} />;
     })}
-  </ol>;
+  </div>;
 }
