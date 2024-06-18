@@ -1,5 +1,14 @@
+* {
+  --text-colour: red;
+}
 body {
   background-color: #222222;
+  color: var(--text-colour);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--text-colour);
 }
 
 .header {
@@ -9,7 +18,9 @@ body {
 .todo {
   background-color: #ffea00cc;
   color: black;
-  border: 5px solid black;
+  border: 5px solid red;
+  padding: 2rem;
+  text-align: center;
 }
 
 .paginator {
@@ -26,12 +37,13 @@ body {
   border-radius: 10px;
   padding: 15px;
   width: 80vw;
+  margin: 2rem 0;
 }
 @media screen and (min-width: 600px) {
   .article-summary {
     grid-template-areas:
-      "a c"
-      "b c";
+      "c a"
+      "c b";
   }
 }
 .article-summary .title {
