@@ -15,12 +15,24 @@ export default function Article({}) {
     });
   }, []);
   
+  function handleVote(event) {
+    alert("This button doesn't anything yet!");
+  }
+  
   return <article className="article">
     {function() {
       if(articleData === null) {
         return <Todo msg="Error component not built!" />;
       }
       return <>
+        <div className="top-bar">
+          <div className="topic">{articleData.topic}</div>
+          <div className="votes">
+            <button onClick={handleVote} id="down">🔽</button>
+            {articleData.votes}
+            <button onClick={handleVote} id="up">🔼</button>
+          </div>
+        </div>
         <h3>{articleData.title}</h3>
         <p>By {articleData.author}</p>
         <p>Posted: {formatDate(articleData.created_at)}</p>
