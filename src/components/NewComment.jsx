@@ -5,6 +5,7 @@ import { formatDate, } from "../utils";
 
 export default function NewComment({ setItems, requestConf, }) {
   const [formVisible, setFormVisible] = useState(false);
+  const [commentBodyInput, setCommentBodyInput] = useState("");
   const { article_id } = useParams();
   
   function addNewComment(event) {
@@ -19,17 +20,21 @@ export default function NewComment({ setItems, requestConf, }) {
       });
     });
   }
+  
+  function handleChange(event) {
+    setCommentBodyInput(event.target.value);
+    console.log(commentBodyInput);
+  }
 
   return <div className="new-comment">
     {!formVisible ?
       <button onClick={() => { setFormVisible(true); }}>Comment...</button>
     :
       <form onSubmit={addNewComment}>
-        <input
-          type="text"
-          name="body"
-          placeholder="Write your comment here..."
-        />
+        <textarea name="body" rows="3"
+          onChange={handleChange} placeholder="Write your comment here..."
+          value={commentBodyInput}>
+        </textarea>
         <button>Post</button>
       </form>}
   </div>;
