@@ -3,6 +3,7 @@ import { useEffect, useState, } from "react";
 import { getArticle } from "../api";
 import Todo from "./Todo";
 import Paginator from "./Paginator";
+import NewComment from "./NewComment";
 import Voter from "./Voter";
 import Comment from "./Comment";
 import { formatDate, } from "../utils";
@@ -45,6 +46,7 @@ export default function Article({}) {
           ItemComponent={Comment}
           idKey="comment_id"
           itemsKey="comments"
+          NewItemComponent={NewComment}
         />
       </>;
     }()}
