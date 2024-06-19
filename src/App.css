@@ -1,9 +1,19 @@
 * {
   --text-colour: red;
+  font-size: 1.1rem;
 }
-body {
-  background-color: #222222;
+#root {
+  background-color: #111111;
   color: var(--text-colour);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  --root-padding: 5vw;
+  padding: 0 var(--root-padding);
+  width: 100vw;
+}
+#root > * {
+  width: calc(100% - 2 * var(--root-padding));
 }
 
 .link {
@@ -13,6 +23,7 @@ body {
 
 .header {
   text-align: center;
+  font-size: 1.6rem;
 }
 
 .todo {
@@ -24,7 +35,6 @@ body {
 }
 
 .paginator {
-  width: 100vw;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -35,16 +45,9 @@ body {
   grid-template-areas: "a" "b" "c";
   border: 5px solid red;
   border-radius: 10px;
-  padding: 15px;
-  width: 80vw;
+  --article-summary-padding: 25px;
+  padding: var(--article-summary-padding);
   margin: 2rem 0;
-}
-@media screen and (min-width: 600px) {
-  .article-summary {
-    grid-template-areas:
-      "c a"
-      "c b";
-  }
 }
 .article-summary .title {
   grid-area: a;
@@ -54,5 +57,36 @@ body {
 }
 .article-summary img {
   grid-area: c;
-  height: 7rem;
+  width: calc(100% - 2 * var(--article-summary-padding));
+}
+
+.article {
+  width: 100%;
+}
+.article img {
+  width: 100%;
+}
+
+
+/* styling for desktops */
+@media screen and (min-width: 600px) {
+  #root {
+    padding: 0 10vw;
+  }
+  .article-summary {
+    grid-template-areas:
+      "c a"
+      "c b";
+  }
+  .article-summary img {
+    max-width: 15rem;
+    margin: 0;
+  }
+}
+
+
+#test {
+  border: 10px solid red;
+  width: 100vw;
+  height: 5rem;
 }

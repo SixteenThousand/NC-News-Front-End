@@ -9,10 +9,12 @@ function App() {
   
   return <>
     <Header />
-    <Routes>
-      <Route path="/" element={<AllArticles />} />
-      <Route path="/articles/:article_id" element={<Article />} />
-    </Routes>
+    <main>
+      <Routes>
+        <Route path="/" element={<AllArticles />} />
+        <Route path="/articles/:article_id" element={<Article />} />
+      </Routes>
+    </main>
   </>;
 }
 
