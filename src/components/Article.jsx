@@ -2,22 +2,24 @@ import { useParams, } from "react-router-dom";
 import { useEffect, useState, } from "react";
 import { getArticle } from "../api";
 import Todo from "./Todo";
+import Paginator from "./Paginator";
+import Voter from "./Voter";
+import Comment from "./Comment";
 import { formatDate, } from "../utils";
 
 
 export default function Article({}) {
   const { article_id } = useParams();
   const [articleData, setArticleData] = useState(null);
+  const commentRequestConf = {
+    url: `/articles/${article_id}/comments`
+  };
   
   useEffect(() => {
     getArticle(article_id).then((data) => {
       setArticleData(data);
     });
   }, []);
-  
-  function handleVote(event) {
-    alert("This button doesn't anything yet!");
-  }
   
   return <article className="article">
     {function() {
@@ -27,11 +29,7 @@ export default function Article({}) {
       return <>
         <div className="top-bar">
           <div className="topic">{articleData.topic}</div>
-          <div className="votes">
-            <button onClick={handleVote} id="down">🔽</button>
-            {articleData.votes}
-            <button onClick={handleVote} id="up">🔼</button>
-          </div>
+          <Voter votes={articleData.votes} />
         </div>
         <h3>{articleData.title}</h3>
         <p>By {articleData.author}</p>
@@ -39,7 +37,12 @@ export default function Article({}) {
         <img src={articleData.article_img_url} alt={`image for ${articleData.title}`} />
         <p>{articleData.body}</p>
         <h4>comments</h4>
-        <Todo msg="comment endpoint not complete!" />
+        <Paginator
+          requestConf={commentRequestConf}
+          ItemComponent={Comment}
+          idKey="comment_id"
+          itemsKey="comments"
+        />
       </>;
     }()}
   </article>;
