@@ -45,6 +45,24 @@ body {
   width: 100%;
 }
 
+.loading-msg {
+  height: 5rem;
+}
+.loading-spinner {
+  height: 3rem;
+  width: 3rem;
+  background-color: red;
+  animation-name: loading-spin;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+@keyframes loading-spin {
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
 .article-summary {
   display: grid;
   grid-template-areas: "a" "b" "c";
@@ -76,6 +94,7 @@ body {
   border-bottom: 2px solid red;
   border-radius: 10px;
   padding: 5px;
+  width: 100%;
 }
 
 
@@ -88,6 +107,7 @@ body {
     grid-template-areas:
       "c a"
       "c b";
+    width: 80vw;
   }
   .article-summary img {
     max-width: 15rem;
