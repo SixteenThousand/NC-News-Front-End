@@ -14,6 +14,9 @@ export default function Article({}) {
   const commentRequestConf = {
     url: `/articles/${article_id}/comments`
   };
+  const voteRequestConf = {
+    url: `/articles/${article_id}`,
+  };
   
   useEffect(() => {
     getArticle(article_id).then((data) => {
@@ -29,7 +32,7 @@ export default function Article({}) {
       return <>
         <div className="top-bar">
           <div className="topic">{articleData.topic}</div>
-          <Voter votes={articleData.votes} />
+          <Voter requestConf={voteRequestConf} initialVotes={articleData.votes} />
         </div>
         <h3>{articleData.title}</h3>
         <p>By {articleData.author}</p>
