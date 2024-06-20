@@ -1,7 +1,8 @@
-import { useState, } from "react";
+import { useState, useContext, } from "react";
 import { useParams, } from "react-router-dom";
 import { formatDate, } from "../utils";
 import api from "../api";
+import UserContext from "../UserContext";
 
 
 export default function NewComment({ setItems, requestConf, }) {
@@ -9,12 +10,13 @@ export default function NewComment({ setItems, requestConf, }) {
   const [formVisible, setFormVisible] = useState(false);
   const [commentBodyInput, setCommentBodyInput] = useState("");
   const { article_id } = useParams();
+  const { user } = useContext(UserContext);
   
   function addNewComment(event) {
     event.preventDefault();
     setItems((items) => {
       return [{
-        author: "jessjelly",
+        author: user.username,
         body: commentBodyInput,
         created_at: formatDate(Date.now()),
         votes: 0,
@@ -22,7 +24,7 @@ export default function NewComment({ setItems, requestConf, }) {
     });
     requestConf.method = "POST";
     requestConf.data = {
-      username: "jessjelly",
+      username: user.username,
       body: commentBodyInput,
     };
     api.request(requestConf)

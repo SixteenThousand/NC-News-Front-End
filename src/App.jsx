@@ -1,13 +1,13 @@
-import { useState, } from 'react'
 import { Routes, Route, } from "react-router-dom";
-import './App.css'
+import "./App.css"
+import { UserContextProvider } from "./UserContext";
 import Header from "./components/Header";
 import AllArticles from "./components/AllArticles";
 import Article from "./components/Article";
 
 function App() {
   
-  return <>
+  return <UserContextProvider>
     <Header />
     <main>
       <Routes>
@@ -15,7 +15,7 @@ function App() {
         <Route path="/articles/:article_id" element={<Article />} />
       </Routes>
     </main>
-  </>;
+  </UserContextProvider>;
 }
 
 export default App
