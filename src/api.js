@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const axiosInst = axios.create({
-  baseURL: "https://nc-news-mwvr.onrender.com/api",
-  // baseURL: "http://localhost:8000/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 export default axiosInst;
 
