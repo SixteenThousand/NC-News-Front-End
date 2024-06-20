@@ -1,9 +1,11 @@
 import { useState, } from "react";
 import { useParams, } from "react-router-dom";
 import { formatDate, } from "../utils";
+import api from "../api";
 
 
 export default function NewComment({ setItems, requestConf, }) {
+  requestConf = structuredClone(requestConf);
   const [formVisible, setFormVisible] = useState(false);
   const [commentBodyInput, setCommentBodyInput] = useState("");
   const { article_id } = useParams();
@@ -11,19 +13,29 @@ export default function NewComment({ setItems, requestConf, }) {
   function addNewComment(event) {
     event.preventDefault();
     setItems((items) => {
-      return items.concat({
-        author: "username",
-        body: "",
+      return [{
+        author: "jessjelly",
+        body: commentBodyInput,
         created_at: formatDate(Date.now()),
         votes: 0,
-        article_id,
-      });
+      }].concat(items);
     });
+    requestConf.method = "POST";
+    requestConf.data = {
+      username: "jessjelly",
+      body: commentBodyInput,
+    };
+    api.request(requestConf)
+      .then(({ data }) => {
+        setCommentBodyInput("");
+      })
+      .catch((err) => {
+        console.log("Something went wrong\n", err);
+      });
   }
   
   function handleChange(event) {
     setCommentBodyInput(event.target.value);
-    console.log(commentBodyInput);
   }
 
   return <div className="new-comment">
