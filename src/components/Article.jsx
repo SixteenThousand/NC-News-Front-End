@@ -1,8 +1,9 @@
 import { useParams, } from "react-router-dom";
 import { useEffect, useState, } from "react";
 import { getArticle } from "../api";
-import Todo from "./Todo";
+import LoadingMsg from "./LoadingMsg";
 import Paginator from "./Paginator";
+import NewComment from "./NewComment";
 import Voter from "./Voter";
 import Comment from "./Comment";
 import { formatDate, } from "../utils";
@@ -11,6 +12,7 @@ import { formatDate, } from "../utils";
 export default function Article({}) {
   const { article_id } = useParams();
   const [articleData, setArticleData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const commentRequestConf = {
     url: `/articles/${article_id}/comments`
   };
@@ -21,15 +23,15 @@ export default function Article({}) {
   useEffect(() => {
     getArticle(article_id).then((data) => {
       setArticleData(data);
+      setIsLoading(false);
     });
   }, []);
   
   return <article className="article">
-    {function() {
-      if(articleData === null) {
-        return <Todo msg="Error component not built!" />;
-      }
-      return <>
+    {isLoading ? 
+      <LoadingMsg msg="Loading article..." />
+    :
+      <>
         <div className="top-bar">
           <div className="topic">{articleData.topic}</div>
           <Voter requestConf={voteRequestConf} initialVotes={articleData.votes} />
@@ -45,8 +47,9 @@ export default function Article({}) {
           ItemComponent={Comment}
           idKey="comment_id"
           itemsKey="comments"
+          loadingMsg="Loading comments..."
+          NewItemComponent={NewComment}
         />
-      </>;
-    }()}
+      </>}
   </article>;
 }

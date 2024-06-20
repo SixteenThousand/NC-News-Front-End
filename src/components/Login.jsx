@@ -1,6 +1,12 @@
+import { useContext, } from "react";
+import UserContext from "../UserContext";
+
+
 export default function Login({}) {
+  const { user, setUser } = useContext(UserContext);
+
   return <div className="login">
-    <img src="./assets/default_avatar.jpg" alt="user avatar" />
-    <p>username</p>
+    <img src={user.avatar_url} alt="user avatar" />
+    <p>{user.username}</p>
   </div>;
 }
