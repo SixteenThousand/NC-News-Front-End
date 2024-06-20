@@ -1,27 +1,21 @@
 import { useState, useContext, } from "react";
-import { useParams, } from "react-router-dom";
-import { formatDate, } from "../utils";
 import api from "../api";
 import UserContext from "../UserContext";
+import LoadingMsg from "./LoadingMsg";
+import ErrorMsg from "./ErrorMsg";
 
 
 export default function NewComment({ setItems, requestConf, }) {
   requestConf = structuredClone(requestConf);
-  const [formVisible, setFormVisible] = useState(false);
   const [commentBodyInput, setCommentBodyInput] = useState("");
-  const { article_id } = useParams();
+  // the "step" in posting a comment that the user is in. Must be one of
+  // "start", "writing", "loading", "error"
+  const [postingStep, setPostingStep] = useState("start");
   const { user } = useContext(UserContext);
   
   function addNewComment(event) {
     event.preventDefault();
-    setItems((items) => {
-      return [{
-        author: user.username,
-        body: commentBodyInput,
-        created_at: formatDate(Date.now()),
-        votes: 0,
-      }].concat(items);
-    });
+    setPostingStep("loading");
     requestConf.method = "POST";
     requestConf.data = {
       username: user.username,
@@ -30,6 +24,11 @@ export default function NewComment({ setItems, requestConf, }) {
     api.request(requestConf)
       .then(({ data }) => {
         setCommentBodyInput("");
+        setItems((items) => [
+          data.postedComment,
+          ...items
+        ]);
+        setPostingStep("start");
       })
       .catch((err) => {
         console.log("Something went wrong\n", err);
@@ -41,15 +40,25 @@ export default function NewComment({ setItems, requestConf, }) {
   }
 
   return <div className="new-comment">
-    {!formVisible ?
-      <button onClick={() => { setFormVisible(true); }}>Comment...</button>
-    :
-      <form onSubmit={addNewComment}>
-        <textarea name="body" rows="3"
-          onChange={handleChange} placeholder="Write your comment here..."
-          value={commentBodyInput}>
-        </textarea>
-        <button>Post</button>
-      </form>}
+    {function() {
+      switch(postingStep) {
+        case "start":
+          return <button onClick={() => { setPostingStep("write"); }}>
+            Comment...
+          </button>;
+        case "write":
+          return <form onSubmit={addNewComment}>
+            <textarea name="body" rows="3"
+              onChange={handleChange} placeholder="Write your comment here..."
+              value={commentBodyInput}>
+            </textarea>
+            <button>Post</button>
+          </form>;
+        case "loading":
+          return <LoadingMsg msg="posting comment..." />;
+        default:
+          return <ErrorMsg />;
+      }
+    }()}
   </div>;
 }

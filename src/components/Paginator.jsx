@@ -36,9 +36,9 @@ export default function Paginator({
   }, []);
 
   return <div className="paginator">
+    <NewItemComponent setItems={setItems} requestConf={requestConf} />
     {items.map((item) => {
       return <ItemComponent key={item[idKey]} data={item} />;
     })}
-    <NewItemComponent setItems={setItems} requestConf={requestConf} />
   </div>;
 }
