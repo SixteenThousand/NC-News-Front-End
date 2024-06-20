@@ -1,5 +1,6 @@
 import { useState, useEffect, } from "react";
 import api from "../api.js";
+import LoadingMsg from "./LoadingMsg";
 
 
 /**
@@ -22,9 +23,11 @@ export default function Paginator({
     ItemComponent,
     idKey,
     itemsKey,
+    loadingMsg,
     NewItemComponent, }) {
   requestConf = structuredClone(requestConf);
   const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     // for later
@@ -32,13 +35,20 @@ export default function Paginator({
     // requestConf.params.limit = 10;
     api.request(requestConf).then(({ data }) => {
       setItems(data[itemsKey]);
+      setIsLoading(false);
     });
   }, []);
 
   return <div className="paginator">
-    <NewItemComponent setItems={setItems} requestConf={requestConf} />
-    {items.map((item) => {
-      return <ItemComponent key={item[idKey]} data={item} />;
-    })}
+    {isLoading ?
+      <LoadingMsg msg={loadingMsg} />
+    :
+      <>
+        <NewItemComponent setItems={setItems} requestConf={requestConf} />
+        {items.map((item) => {
+          return <ItemComponent key={item[idKey]} data={item} />;
+        })}
+      </>
+    }
   </div>;
 }
