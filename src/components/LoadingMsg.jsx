@@ -1,6 +1,6 @@
-export default function LoadingMsg({}) {
+export default function LoadingMsg({ msg }) {
   return <div className="loading-msg">
     <div className="loading-spinner"></div>
-    Loading ...
+    {msg ? msg : "Loading..."}
   </div>;
 }
