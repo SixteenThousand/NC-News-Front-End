@@ -11,7 +11,11 @@ const SORTABLE_FIELDS = {
 };
 
 export default function SearchBar({ setRequestConf, }) {
-  const [searchInputs, setSearchInputs] = useState({});
+  const [searchInputs, setSearchInputs] = useState({
+    topic: "coding",
+    sortBy: "created_at",
+    order: "desc",
+  });
   const [topics, setTopics] = useState([]);
   const [hasErrored, setHasErrored] = useState(false);
   const [urlQueries, setUrlQueries] = useSearchParams();
@@ -42,31 +46,35 @@ export default function SearchBar({ setRequestConf, }) {
   return <form className="search-bar">
     <label>
       Topic:
-      <select onChange={handleChange} name="topic" value={searchInputs.topic}>
+      <select onChange={handleChange} name="topic"
+          defaultValue={searchInputs.topic}
+          value={searchInputs.topic}>
         {topics.map((topic) => {
-          if(topic === urlQueries.get("topic")) {
-            return <option key={topic} value={topic} selected>
-              {topic}
-            </option>;
-        }
-        return <option key={topic} value={topic}>{topic}</option>;
+          return <option key={topic} value={topic}>
+            {topic}
+          </option>;
         })}
       </select>
     </label>
     <label>
       Sort by:
       <select onChange={handleChange} name="sort_by"
+          defaultValue={searchInputs.sortBy}
           value={searchInputs.sortBy}>
         {Object.keys(SORTABLE_FIELDS).map((field) => {
-          if(field === urlQueries.get("sort_by")) {
-            return <option key={field} value={field} selected>
+            return <option key={field} value={field}>
               {SORTABLE_FIELDS[field]}
             </option>;
-          }
-          return <option key={field} value={field}>
-            {SORTABLE_FIELDS[field]}
-          </option>;
         })}
+      </select>
+    </label>
+    <label>
+      Order:
+      <select onChange={handleChange} name="order"
+          defaultValue={searchInputs.order}
+          value={searchInputs.order}>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
       </select>
     </label>
     <button>Search</button>
