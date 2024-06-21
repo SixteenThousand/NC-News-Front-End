@@ -2,6 +2,7 @@ import { useState, useEffect, } from "react";
 import { useSearchParams, } from "react-router-dom";
 import api from "../api.js";
 import LoadingMsg from "./LoadingMsg";
+import { compareByKey, } from "../utils";
 
 
 /**
@@ -29,17 +30,37 @@ export default function Paginator({
   requestConf = structuredClone(requestConf);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [queries, setQueries]  = useSearchParams();
+  const [urlQueries, setUrlQueries]  = useSearchParams();
   
   useEffect(() => {
     api.request(requestConf).then(({ data }) => {
       // filter out some received items based on queries in the url
-      const newItems = data[itemsKey].filter((item) => {
-        for(const [key,value] of queries.entries()) {
-          if(value !== item[key]) return false;
+      // but do not filter by the "sort_by" query
+      let sortByQuery;
+      let sortOrderQuery;
+      const filterQueries = [];
+      for(const entry of urlQueries.entries()) {
+        switch(entry[0]) {
+          case "sort_by":
+            sortByQuery = entry[1];
+            break;
+          case "order":
+            sortOrderQuery = entry[1];
+            break;
+          default:
+            filterQueries.push(entry);
+            break;
         }
-        return true;
-      });
+      }
+      const newItems = data[itemsKey]
+        .filter((item) => {
+          for(const [key,value] of filterQueries) {
+            if(value !== "all" && value !== item[key]) return false;
+          }
+          return true;
+        })
+        .toSorted(compareByKey(urlQueries.get("sort_by")));
+      if(sortOrderQuery === "desc") newItems.reverse();
       setItems(newItems);
       setIsLoading(false);
     });
