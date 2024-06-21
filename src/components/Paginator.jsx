@@ -1,4 +1,5 @@
 import { useState, useEffect, } from "react";
+import { useSearchParams, } from "react-router-dom";
 import api from "../api.js";
 import LoadingMsg from "./LoadingMsg";
 
@@ -28,13 +29,18 @@ export default function Paginator({
   requestConf = structuredClone(requestConf);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [queries, setQueries]  = useSearchParams();
   
   useEffect(() => {
-    // for later
-    // requestConf.params.p = //some page state
-    // requestConf.params.limit = 10;
     api.request(requestConf).then(({ data }) => {
-      setItems(data[itemsKey]);
+      // filter out some received items based on queries in the url
+      const newItems = data[itemsKey].filter((item) => {
+        for(const [key,value] of queries.entries()) {
+          if(value !== item[key]) return false;
+        }
+        return true;
+      });
+      setItems(newItems);
       setIsLoading(false);
     });
   }, []);
