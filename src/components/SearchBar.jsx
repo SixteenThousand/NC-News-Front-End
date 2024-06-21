@@ -12,7 +12,7 @@ const SORTABLE_FIELDS = {
 
 export default function SearchBar({ setRequestConf, }) {
   const [searchInputs, setSearchInputs] = useState({
-    topic: "coding",
+    topic: "all",
     sortBy: "created_at",
     order: "desc",
   });
@@ -48,6 +48,7 @@ export default function SearchBar({ setRequestConf, }) {
       Topic:
       <select onChange={handleChange} name="topic"
           defaultValue={searchInputs.topic}>
+        <option key="all" value="all">All</option>
         {topics.map((topic) => {
           return <option key={topic} value={topic}>
             {topic}

@@ -55,7 +55,7 @@ export default function Paginator({
       const newItems = data[itemsKey]
         .filter((item) => {
           for(const [key,value] of filterQueries) {
-            if(value !== item[key]) return false;
+            if(value !== "all" && value !== item[key]) return false;
           }
           return true;
         })
