@@ -7,7 +7,7 @@
     "dev": "vite --mode production",
     "serve-dev-mode": "vite --mode 'development'",
     "serve-prod-mode": "vite --mode 'production'",
-    "build": "vite build",
+    "build": "vite --mode 'production' build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "node ./src/tests.test.js"
