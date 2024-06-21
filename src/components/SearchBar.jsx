@@ -1,4 +1,5 @@
 import { useState, useEffect, } from "react";
+import { useSearchParams, } from "react-router-dom";
 import ErrorMsg from "./ErrorMsg";
 import api from "../api";
 
@@ -7,6 +8,7 @@ export default function SearchBar({ setRequestConf, }) {
   const [searchInputs, setSearchInputs] = useState({});
   const [topics, setTopics] = useState([]);
   const [hasErrored, setHasErrored] = useState(false);
+  const [urlQueries, setUrlQueries] = useSearchParams();
   
   useEffect(() => {
     api.get("/topics")
@@ -33,9 +35,14 @@ export default function SearchBar({ setRequestConf, }) {
   }
   return <form className="search-bar">
     <select onChange={handleChange} name="topic" value={searchInputs.topic}>
-      {topics.map((topic) => 
-        <option key={topic} value={topic}>{topic}</option>
-      )}
+      {topics.map((topic) => {
+        if(topic === urlQueries.get("topic")) {
+          return <option key={topic} value={topic} selected>
+            {topic}
+          </option>;
+        }
+        return <option key={topic} value={topic}>{topic}</option>;
+      })}
     </select>
     <button>Search</button>
   </form>;
