@@ -47,8 +47,7 @@ export default function SearchBar({ setRequestConf, }) {
     <label>
       Topic:
       <select onChange={handleChange} name="topic"
-          defaultValue={searchInputs.topic}
-          value={searchInputs.topic}>
+          defaultValue={searchInputs.topic}>
         {topics.map((topic) => {
           return <option key={topic} value={topic}>
             {topic}
@@ -59,8 +58,7 @@ export default function SearchBar({ setRequestConf, }) {
     <label>
       Sort by:
       <select onChange={handleChange} name="sort_by"
-          defaultValue={searchInputs.sortBy}
-          value={searchInputs.sortBy}>
+          defaultValue={searchInputs.sortBy}>
         {Object.keys(SORTABLE_FIELDS).map((field) => {
             return <option key={field} value={field}>
               {SORTABLE_FIELDS[field]}
@@ -71,8 +69,7 @@ export default function SearchBar({ setRequestConf, }) {
     <label>
       Order:
       <select onChange={handleChange} name="order"
-          defaultValue={searchInputs.order}
-          value={searchInputs.order}>
+          defaultValue={searchInputs.order}>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
       </select>
