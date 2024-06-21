@@ -20,15 +20,19 @@ export default function SearchBar({ setRequestConf, }) {
   }, []);
 
   function handleChange(event) {
-    console.log(event.target.value);
+    setSearchInputs((currSearchInputs) => {
+      return {
+        ...currSearchInputs,
+        [event.target.name]: event.target.value,
+      };
+    });
   }
   
   if(hasErrored) {
     return <ErrorMsg msg="Topics could not be loaded. Please try again." />;
   }
   return <form className="search-bar">
-    <select onChange={handleChange} value={searchInputs.topic}>
-      {console.log(topics)}
+    <select onChange={handleChange} name="topic" value={searchInputs.topic}>
       {topics.map((topic) => 
         <option key={topic} value={topic}>{topic}</option>
       )}
