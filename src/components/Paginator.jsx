@@ -37,12 +37,19 @@ export default function Paginator({
       // filter out some received items based on queries in the url
       // but do not filter by the "sort_by" query
       let sortByQuery;
+      let sortOrderQuery;
       const filterQueries = [];
       for(const entry of urlQueries.entries()) {
-        if(entry[0] === "sort_by") {
-          sortByQuery = entry[1];
-        } else {
-          filterQueries.push(entry);
+        switch(entry[0]) {
+          case "sort_by":
+            sortByQuery = entry[1];
+            break;
+          case "order":
+            sortOrderQuery = entry[1];
+            break;
+          default:
+            filterQueries.push(entry);
+            break;
         }
       }
       const newItems = data[itemsKey]
@@ -53,6 +60,7 @@ export default function Paginator({
           return true;
         })
         .toSorted(compareByKey(urlQueries.get("sort_by")));
+      if(sortOrderQuery === "desc") newItems.reverse();
       setItems(newItems);
       setIsLoading(false);
     });
