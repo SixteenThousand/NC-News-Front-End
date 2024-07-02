@@ -1,5 +1,6 @@
 # ASAP
 - reformat ArticleSummary so picture appears next to text on wide view
+- remove unused imports
 
 # Next PR
 
