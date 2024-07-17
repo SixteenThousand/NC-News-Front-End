@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "source ./.env.development && vite --mode 'development'",
     "prod": "source ./.env.production && vite --mode 'production'",
-    "build": "source ./.env.production && vite --mode 'production' build",
+    "build": "vite --mode 'production' build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "node ./src/tests.test.js"
