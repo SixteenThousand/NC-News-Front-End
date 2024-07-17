@@ -2,7 +2,7 @@ import { useParams, } from "react-router-dom";
 import { useEffect, useState, } from "react";
 import { getArticle } from "../api";
 import LoadingMsg from "./LoadingMsg";
-import Paginator from "./Paginator";
+import Scroller from "./Scroller";
 import NewComment from "./NewComment";
 import Voter from "./Voter";
 import Comment from "./Comment";
@@ -42,7 +42,7 @@ export default function Article({}) {
         <img src={articleData.article_img_url} alt={`image for ${articleData.title}`} />
         <p>{articleData.body}</p>
         <h4>comments</h4>
-        <Paginator
+        <Scroller
           requestConf={commentRequestConf}
           ItemComponent={Comment}
           idKey="comment_id"

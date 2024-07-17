@@ -5,8 +5,8 @@ import { formatDate, } from "../utils";
 export default function ArticleSummary({ data, }) {
   return <Link className="link" to={`/articles/${data.article_id}`}>
     <article className="article-summary">
-      <div className="title">{data.title}</div>
       <div className="details">
+        <div className="title">{data.title}</div>
         <div className="topic">{data.topic}</div>
         <div className="votes">{data.votes}</div>
         <div className="author">By {data.author}</div>
