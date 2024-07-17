@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ArticleSummary from "./ArticleSummary";
-import Paginator from "./Paginator";
+import Scroller from "./Scroller";
 import Todo from "./Todo";
 import SearchBar from "./SearchBar";
 
@@ -10,7 +10,7 @@ export default function AllArticles({}) {
   const [requestConf, setRequestConf] = useState({ url: "/articles" });
   return <div className="all-articles">
     <SearchBar setRequestConf={setRequestConf} />
-    <Paginator
+    <Scroller
       requestConf={requestConf}
       ItemComponent={ArticleSummary}
       idKey="article_id"

@@ -18,9 +18,9 @@ import { compareByKey, } from "../utils";
  * items is stored
  * @prop NewItemComponent: React Component - a form which can be used to add
  * a new item to the list. Makes a patch request to the same endpoint as
- * Paginator
+ * Scroller
  */
-export default function Paginator({
+export default function Scroller({
     requestConf,
     ItemComponent,
     idKey,
@@ -66,7 +66,7 @@ export default function Paginator({
     });
   }, []);
 
-  return <div className="paginator">
+  return <div className="scroller">
     {isLoading ?
       <LoadingMsg msg={loadingMsg} />
     :

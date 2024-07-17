@@ -38,7 +38,7 @@ body {
   text-align: center;
 }
 
-.paginator {
+.scroller {
   display: flex;
   align-items: center;
   flex-direction: column;
