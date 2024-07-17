@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode production",
-    "serve-dev-mode": "vite --mode 'development'",
-    "serve-prod-mode": "vite --mode 'production'",
-    "build": "vite --mode 'production' build",
+    "dev": "source ./.env.development && vite --mode 'development'",
+    "prod": "source ./.env.production && vite --mode 'production'",
+    "build": "source ./.env.production && vite --mode 'production' build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "node ./src/tests.test.js"
